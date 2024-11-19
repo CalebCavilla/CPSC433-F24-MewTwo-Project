@@ -16,6 +16,12 @@ class GameSlot:
         self.gameMax = gameMax
         self.gameMin = gameMin
 
+    def __str__(self):
+        return f"[{self.day}, {self.startTime}, {self.gameMax}, {self.gameMin}]"
+    
+    def __repr__(self):
+        return f"[{repr(self.day)}, {repr(self.startTime)}, {repr(self.gameMax)}, {repr(self.gameMin)}]"
+
     def getDay(self):
         """Returns the day of the week as a string"""
         return self.day
@@ -49,6 +55,12 @@ class PracticeSlot:
         self.practiceMax = practiceMax
         self.practiceMin = practiceMin
 
+    def __str__(self):
+        return f"[{self.day}, {self.startTime}, {self.practiceMax}, {self.practiceMin}]"
+    
+    def __repr__(self):
+        return f"[{repr(self.day)}, {repr(self.startTime)}, {repr(self.practiceMax)}, {repr(self.practiceMin)}]"
+
     def getDay(self):
         """Returns the day of the week as a string"""
         return self.day
@@ -80,6 +92,12 @@ class Game:
         self.preferenceSlots = []
         self.pairs = []
         self.partialAssignSlot = None
+    
+    def __str__(self):
+        return f"{self.identifier}"
+    
+    def __repr__(self):
+        return f"{repr(self.identifier)}"
 
     def getIdentifier(self):
         """Returns the identifier for the game as a string"""
@@ -166,6 +184,12 @@ class Practice:
         self.preferenceSlots = []
         self.pairs = []
         self.partialAssignSlot = None
+
+    def __str__(self):
+        return f"{self.identifier}"
+    
+    def __repr__(self):
+        return f"{repr(self.identifier)}"
 
     def getIdentifier(self):
         """Returns the identifier for the practice as a string"""
@@ -347,32 +371,14 @@ class Practices:
         Parameters:
             practice (Practice): The practice object to be removed from the list of practices
         """
-        Practices.getPractices() = [p for p in Practices.practices if p != practice]
+        Practices.practices = [p for p in Practices.practices if p != practice]
 
     @staticmethod
     def getPractices():
         """Returns a copy of the list of practices that needs to be scheduled"""
         return list(Practices.practices)
 
-class notCompatible:
-    """
-    Static Class to represent the list of all games/practices that are incompatible with one another
-    """
-    notCompatibles = []
-
-    @staticmethod
-    def addIncompatibility(element1, element2):
-        """Adds a tuple representing two games/practices that are incompatible with one another (cannot be scheduled in the same slot)
-        
-        Parameters:
-            element1 (Game/Practice): The first game or practice object that is incompatible with the second element
-            element2 (Game/Practice): The second game or practice object that is incompatible with the first element
-        """
-        Practices.practices.append(practice)
-
-    @staticmethod
-    def getIncompatibilities():
-        """Returns a copy of the of the list of games/practices that are incompatible"""
-        return list(Practices.practices)
-    
+class InvalidInputError(Exception):
+    def __init__(self, message):
+        super().__init__(message)
 
