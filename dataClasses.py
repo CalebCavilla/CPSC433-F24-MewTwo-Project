@@ -1,4 +1,5 @@
 import sys
+import re
 
 class GameSlot:
     """
@@ -92,6 +93,13 @@ class Game:
         self.preferenceSlots = []
         self.pairs = []
         self.partialAssignSlot = None
+
+        words = self.identifier.split()
+        self.organization = words[0]
+        self.ageGroup = words[1]
+        self.division = int(words[3])
+
+        print(self.organization, self.ageGroup, self.division)
     
     def __str__(self):
         return f"{self.identifier}"
@@ -184,6 +192,25 @@ class Practice:
         self.preferenceSlots = []
         self.pairs = []
         self.partialAssignSlot = None
+
+        words = self.identifier.split()
+        self.organization = words[0]
+        self.ageGroup = words[1]
+         # Check for division and practice
+        if "DIV" in words:
+            self.division = int(words[words.index("DIV") + 1])
+            if "PRC" in words:
+                self.practiceNum = int(words[words.index("PRC") + 1])
+            else:
+                self.practiceNum = int(words[words.index("OPN") + 1])
+        else:
+            self.division = None
+            if "PRC" in words:
+                self.practiceNum = int(words[words.index("PRC") + 1])
+            else:
+                self.practiceNum = int(words[words.index("OPN") + 1])
+
+        print(self.organization, self.ageGroup, self.division, self.practiceNum)
 
     def __str__(self):
         return f"{self.identifier}"
