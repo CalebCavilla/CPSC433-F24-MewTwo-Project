@@ -495,6 +495,101 @@ class Practices:
                 if practice.getIdentifier() == identifier:
                     return practice
         return None
+    
+class WeightsAndPenalties:
+    """
+    Static Class to hold all weights and penalties needed for the search
+    """
+    minFilledWeight = None
+    prefWeight = None
+    pairWeight = None
+    secDiffWeight = None
+    gameMinPen = None
+    practiceMinPen = None
+    notPairedPen = None
+    sectionPen = None
+
+    @staticmethod
+    def getMinFilledWeight():
+        """Returns the minimum filled weight"""
+        return WeightsAndPenalties.minFilledWeight
+    
+    @staticmethod
+    def setMinFilledWeight(minFilledWeight):
+        """sets the value of the minimum filled weight"""
+        WeightsAndPenalties.minFilledWeight = minFilledWeight
+
+    @staticmethod
+    def getPrefWeight():
+        """Returns the preference weight"""
+        return WeightsAndPenalties.prefWeight
+    
+    @staticmethod
+    def setPrefWeight(prefWeight):
+        """sets the value of the preference weight"""
+        WeightsAndPenalties.prefWeight = prefWeight
+
+    @staticmethod
+    def getPairWeight():
+        """Returns the pair weight"""
+        return WeightsAndPenalties.pairWeight
+    
+    @staticmethod
+    def setPairWeight(pairWeight):
+        """sets the value of the pair weight"""
+        WeightsAndPenalties.pairWeight = pairWeight
+
+    @staticmethod
+    def getSecDiffWeight():
+        """Returns the section difference weight"""
+        return WeightsAndPenalties.secDiffWeight
+    
+    @staticmethod
+    def setSecDiffWeight(secDiffWeight):
+        """sets the value of the section difference weight"""
+        WeightsAndPenalties.secDiffWeight = secDiffWeight
+    
+    @staticmethod
+    def getGameMinPen():
+        """Returns the game minimum penalty"""
+        return WeightsAndPenalties.gameMinPen
+    
+    @staticmethod
+    def setGameMinPen(gameMinPen):
+        """sets the value of the game minimum penalty"""
+        WeightsAndPenalties.gameMinPen = gameMinPen
+    
+    @staticmethod
+    def getPracticeMinPen():
+        """Returns the practice minimum penalty"""
+        return WeightsAndPenalties.practiceMinPen
+    
+    @staticmethod
+    def setPracticeMinPen(practiceMinPen):
+        """sets the value of the practice minimum penalty"""
+        WeightsAndPenalties.practiceMinPen = practiceMinPen
+
+    @staticmethod
+    def getNotPairedPen():
+        """Returns the not paired penalty"""
+        return WeightsAndPenalties.notPairedPen
+    
+    @staticmethod
+    def setNotPairedPen(notPairedPen):
+        """sets the value of the not paired penalty"""
+        WeightsAndPenalties.notPairedPen = notPairedPen
+
+    @staticmethod
+    def getSectionPen():
+        """Returns the section penalty"""
+        return WeightsAndPenalties.sectionPen
+    
+    @staticmethod
+    def setSectionPen(sectionPen):
+        """sets the value of the section penalty"""
+        WeightsAndPenalties.sectionPen = sectionPen
+
+
 
 class InvalidInputError(Exception):
     def __init__(self, message):
