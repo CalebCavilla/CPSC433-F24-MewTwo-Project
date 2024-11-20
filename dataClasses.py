@@ -106,6 +106,11 @@ class Game:
     
     def __repr__(self):
         return f"{repr(self.identifier)}"
+    
+    def __eq__(self, other):
+        if isinstance(other, Game):
+            return self.identifier == other.identifier # Two games are considered the same if they have the same identifier
+        return NotImplemented
 
     def getIdentifier(self):
         """Returns the identifier for the game as a string"""
@@ -217,6 +222,11 @@ class Practice:
     
     def __repr__(self):
         return f"{repr(self.identifier)}"
+    
+    def __eq__(self, other):
+        if isinstance(other, Practice):
+            return self.identifier == other.identifier # Two games are considered the same if they have the same identifier
+        return NotImplemented
 
     def getIdentifier(self):
         """Returns the identifier for the practice as a string"""
