@@ -17,7 +17,7 @@ def treeSearch(prob):
         # Run Ftrans to choose a game or practice to schedule
         match = ftrans()
         # Run DIV to create leafs based on ftrans and pr
-        div(leaf, match)
+        div(pr, match)
 
     return 0
 
