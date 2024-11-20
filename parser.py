@@ -110,7 +110,34 @@ try:
                     if (slot == None): print(f"WARNING, Header: (Preferences) has an input with a slot that does not exist, line: {lineNum}"); continue
                     practice.addPreferenceSlot(slot, preferenceValue)
                 else:
-                    raise data.InvalidInputError(f"Header: (Preferences) has an input with a game/practice that does not exist, line: {lineNum}")
+                    print(data.InvalidInputError(f"WARNING Header: (Preferences) has an input with a game/practice that does not exist, line: {lineNum}"))
+            elif currentHeader == "Pair":
+                words = [word.strip() for word in strippedLine.split(",")] # get the individual words out of the line
+                if (len(words) != 2): raise data.InvalidInputError(f"Header: (Pair) has an input with incorrect number of parameters, line: {lineNum}")
+                element1 = words [0]
+                element2 = words [1]
+                if (data.Games.getGameByIdentifier(element1) != None and data.Games.getGameByIdentifier(element2) != None): # Both elements are games
+                    game1 = data.Games.getGameByIdentifier(element1)
+                    game2 = data.Games.getGameByIdentifier(element2)
+                    game1.addPair(game2)
+                    game2.addPair(game1)
+                elif (data.Games.getGameByIdentifier(element1) != None and data.Practices.getPracticeByIdentifier(element2) != None): # First element is game, second is practice
+                    game1 = data.Games.getGameByIdentifier(element1)
+                    practice1 = data.Practices.getPracticeByIdentifier(element2)
+                    game1.addPair(practice1)
+                    practice1.addPair(game1)
+                elif (data.Practices.getPracticeByIdentifier(element1) != None and data.Games.getGameByIdentifier(element2) != None): # first element is practice, second is game
+                    practice1 = data.Practices.getPracticeByIdentifier(element1)
+                    game1 = data.Games.getGameByIdentifier(element2)
+                    practice1.addPair(game1)
+                    game1.addPair(practice1)
+                elif (data.Practices.getPracticeByIdentifier(element1) != None and data.Practices.getPracticeByIdentifier(element2) != None): # Both elements are practices
+                    practice1 = data.Practices.getPracticeByIdentifier(element1)
+                    practice2 = data.Practices.getPracticeByIdentifier(element2)
+                    practice1.addPair(practice2)
+                    practice2.addPair(practice1)
+                else:
+                    raise data.InvalidInputError(f"Header: (Pair) has an input with a game/practice that does not exist, line: {lineNum}")
             
 
 
@@ -160,3 +187,11 @@ for game in data.Games.getGames():
 for practice in data.Practices.getPractices():
     if isinstance(practice, data.Practice):
         print(practice.getIdentifier(), ":",practice.getPreferenceSlots())
+
+print("Pair: ")
+for game in data.Games.getGames():
+    if isinstance(game, data.Game):
+        print(game.getIdentifier(), ":", game.getPairs())
+for practice in data.Practices.getPractices():
+    if isinstance(practice, data.Practice):
+        print(practice.getIdentifier(), ":",practice.getPairs())
