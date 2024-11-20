@@ -98,8 +98,6 @@ class Game:
         self.organization = words[0]
         self.ageGroup = words[1]
         self.division = int(words[3])
-
-        print(self.organization, self.ageGroup, self.division)
     
     def __str__(self):
         return f"{self.identifier}"
@@ -181,6 +179,18 @@ class Game:
         """Returns a copy of the game slot that the game is assigned to"""
         return self.partialAssignSlot
     
+    def getOrganization(self):
+        """Returns the organization of the practice"""
+        return self.organization
+    
+    def getAgeGroup(self):
+        """Returns the age group of the practice"""
+        return self.ageGroup
+    
+    def getDivision(self):
+        """Returns the division of the practice"""
+        return self.division
+    
     
 
 class Practice:
@@ -214,8 +224,6 @@ class Practice:
                 self.practiceNum = int(words[words.index("PRC") + 1])
             else:
                 self.practiceNum = int(words[words.index("OPN") + 1])
-
-        print(self.organization, self.ageGroup, self.division, self.practiceNum)
 
     def __str__(self):
         return f"{self.identifier}"
@@ -296,6 +304,22 @@ class Practice:
     def getPartialAssignmentSlot(self):
         """Returns a copy of the practice slot that the practice is assigned to"""
         return self.partialAssignSlot
+    
+    def getOrganization(self):
+        """Returns the organization of the practice"""
+        return self.organization
+    
+    def getAgeGroup(self):
+        """Returns the age group of the practice"""
+        return self.ageGroup
+    
+    def getDivision(self):
+        """Returns the division of the practice"""
+        return self.division
+    
+    def getPracticeNum(self):
+        """Returns the practiceNum of the practice"""
+        return self.practiceNum
 
 
 class GameSlots:
@@ -386,6 +410,20 @@ class Games:
         """Returns a copy of the list of games that needs to be scheduled"""
         return list(Games.games)
     
+    @staticmethod
+    def getGameByIdentifier(identifier):
+        """Returns a game in the list of current games if it is in the list, None otherwise
+        
+        Parameters:
+            identifier (str): The identifier of the game you want to retrieve from the list of current games
+        """
+        for game in Games.games:
+            if isinstance(game, Game):
+                if game.getIdentifier() == identifier:
+                    return game
+        return None
+
+    
 class Practices:
     """
     Static Class to represent the list of all practices that need to be scheduled
@@ -414,6 +452,19 @@ class Practices:
     def getPractices():
         """Returns a copy of the list of practices that needs to be scheduled"""
         return list(Practices.practices)
+    
+    @staticmethod
+    def getPracticeByIdentifier(identifier):
+        """Returns a practice in the list of current practices if it is in the list, None otherwise
+        
+        Parameters:
+            identifier (str): The identifier of the practice you want to retrieve from the list of current practices
+        """
+        for practice in Practices.practices:
+            if isinstance(practice, Practice):
+                if practice.getIdentifier() == identifier:
+                    return practice
+        return None
 
 class InvalidInputError(Exception):
     def __init__(self, message):
