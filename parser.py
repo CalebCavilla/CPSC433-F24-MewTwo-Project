@@ -75,9 +75,20 @@ try:
                     raise data.InvalidInputError(f"Header: (Not compatible) has an input with incorrect format of parameters (must be (game, game), (game, practice), (practice, practice)), line: {lineNum}")
             elif currentHeader == "Unwanted":
                 words = [word.strip() for word in strippedLine.split(",")] # get the individual words out of the line
-                if (len(words) != 2): raise data.InvalidInputError(f"Header: (Unwanted) has an input with incorrect number of parameters, line: {lineNum}")
-                element = words [0]
-                element2 = words [1]
+                if (len(words) != 3): raise data.InvalidInputError(f"Header: (Unwanted) has an input with incorrect number of parameters, line: {lineNum}")
+                element = words[0]
+                slotDay = words[1]
+                slotTime = words[2]
+                if (data.Games.getGameByIdentifier(element) != None): # If its a game
+                    game = data.Games.getGameByIdentifier(element)
+                    slot = data.GameSlots.getGameSlotByDayAndTime(slotDay, slotTime)
+                    if (slot == None): raise data.InvalidInputError(f"Header: (Unwanted) has an input with a slot description that does not exist, line: {lineNum}")
+                    game.addUnwantedSlot(slot)
+                elif(data.Practices.getPracticeByIdentifier(element) != None): # If its a practice
+                    practice = data.Games.getGameByIdentifier(element)
+                    slot = data.GameSlots.getGameSlotByDayAndTime(slotDay, slotTime)
+                    if (slot == None): raise data.InvalidInputError(f"Header: (Unwanted) has an input with a slot description that does not exist, line: {lineNum}")
+                    practice.addUnwantedSlot(slot)
 
 
 
@@ -85,6 +96,7 @@ try:
 
 except data.InvalidInputError as e:
     print(f"Caught Invalid Input Error: {e}")
+    sys.exit()
 
 # add incompatibilities between games and practices of the same teams
 for game in data.Games.getGames():
@@ -102,11 +114,19 @@ for game in data.Games.getGames():
 
 
 print(f"Game Slots: {data.GameSlots.getGameSlots()}\n Practice Slots: {data.PracticeSlots.getPracticeSlots()}\n Games: {data.Games.getGames()}\n Practices: {data.Practices.getPractices()}")
+
 print("Not Compatible: ")
 for game in data.Games.getGames():
     if isinstance(game, data.Game):
-        print(game.getIdentifier(), ": ", game.getIncompatibility())
-
+        print(game.getIdentifier(), ":", game.getIncompatibility())
 for practice in data.Practices.getPractices():
     if isinstance(practice, data.Practice):
-        print(practice.getIdentifier(), ": ",practice.getIncompatibility())
+        print(practice.getIdentifier(), ":",practice.getIncompatibility())
+
+print("Unwanted: ")
+for game in data.Games.getGames():
+    if isinstance(game, data.Game):
+        print(game.getIdentifier(), ":", game.getUnwantedSlots())
+for practice in data.Practices.getPractices():
+    if isinstance(practice, data.Practice):
+        print(practice.getIdentifier(), ":",practice.getUnwantedSlots())

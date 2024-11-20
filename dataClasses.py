@@ -350,6 +350,20 @@ class GameSlots:
     def getGameSlots():
         """Returns a copy of the list of game slots available in the schedule"""
         return list(GameSlots.gameSlots)
+    
+    @staticmethod
+    def getGameSlotByDayAndTime(day, startTime):
+        """Returns a game slot in the list of current game slots if it is in the list, None otherwise
+        
+        Parameters:
+            day (str): The day of the game slot you want to retrieve
+            startTime (str): The start time of the game slot you want to retrieve
+        """
+        for gameSlot in GameSlots.gameSlots:
+            if isinstance(gameSlot, GameSlot):
+                if (gameSlot.getDay() == day and gameSlot.getStartTime() == startTime):
+                    return gameSlot
+        return None
 
 class PracticeSlots:
     """
@@ -379,6 +393,20 @@ class PracticeSlots:
     def getPracticeSlots():
         """Returns a copy of the list of practice slots available in the schedule"""
         return list(PracticeSlots.practiceSlots)
+    
+    @staticmethod
+    def getPracticeSlotByDayAndTime(day, startTime):
+        """Returns a practice slot in the list of current practice slots if it is in the list, None otherwise
+        
+        Parameters:
+            day (str): The day of the practice slot you want to retrieve
+            startTime (str): The start time of the practice slot you want to retrieve
+        """
+        for practiceSlot in PracticeSlots.practiceSlots:
+            if isinstance(practiceSlot, PracticeSlot):
+                if (practiceSlot.getDay() == day and practiceSlot.getStartTime() == startTime):
+                    return practiceSlot
+        return None
 
 
 class Games:
