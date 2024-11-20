@@ -138,6 +138,24 @@ try:
                     practice2.addPair(practice1)
                 else:
                     raise data.InvalidInputError(f"Header: (Pair) has an input with a game/practice that does not exist, line: {lineNum}")
+            elif currentHeader == "Partial assignments":
+                words = [word.strip() for word in strippedLine.split(",")] # get the individual words out of the line
+                if (len(words) != 3): raise data.InvalidInputError(f"Header: (Partial assignments) has an input with incorrect number of parameters, line: {lineNum}")
+                element = words[0]
+                slotDay = words[1]
+                slotTime = words[2]
+                if (data.Games.getGameByIdentifier(element) != None): # If its a game
+                    game = data.Games.getGameByIdentifier(element)
+                    slot = data.GameSlots.getGameSlotByDayAndTime(slotDay, slotTime)
+                    if (slot == None): raise data.InvalidInputError(f"Header: (Partial assignments) has an input with a slot that does not exist, line: {lineNum}")
+                    game.setPartialAssignmentSlot(slot)
+                elif(data.Practices.getPracticeByIdentifier(element) != None): # If its a practice
+                    practice = data.Practices.getPracticeByIdentifier(element)
+                    slot = data.PracticeSlots.getPracticeSlotByDayAndTime(slotDay, slotTime)
+                    if (slot == None): raise data.InvalidInputError(f"Header: (Partial assignments) has an input with a slot that does not exist, line: {lineNum}")
+                    practice.setPartialAssignmentSlot(slot)
+                else:
+                    raise data.InvalidInputError(f"Header: (Partial assignments) has an input with a game/practice that does not exist, line: {lineNum}")
             
 
 
@@ -195,3 +213,11 @@ for game in data.Games.getGames():
 for practice in data.Practices.getPractices():
     if isinstance(practice, data.Practice):
         print(practice.getIdentifier(), ":",practice.getPairs())
+
+print("Unwanted: ")
+for game in data.Games.getGames():
+    if isinstance(game, data.Game):
+        print(game.getIdentifier(), ":", game.getPartialAssignmentSlot())
+for practice in data.Practices.getPractices():
+    if isinstance(practice, data.Practice):
+        print(practice.getIdentifier(), ":",practice.getPartialAssignmentSlot())
