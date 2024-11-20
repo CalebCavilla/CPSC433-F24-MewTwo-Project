@@ -140,14 +140,15 @@ class Game:
         """Returns a copy of the list of game slots that the game does not want"""
         return list(self.unwantedSlots)
     
-    def addPreferenceSlot(self, gameSlot):
+    def addPreferenceSlot(self, gameSlot, preferenceValue):
         """
         add a slot to the games preference list
         
         Parameters
             gameSlot (GameSlot): the game slot that the game has a preference for
+            preferenceValue (int): the preference value of the slot the game wants
         """
-        self.preferenceSlots.append(gameSlot)
+        self.preferenceSlots.append((gameSlot, preferenceValue))
     
     def getPreferenceSlots(self):
         """Returns a copy of the list of game slots that the game has a preference for"""
@@ -266,14 +267,15 @@ class Practice:
         """Returns a copy of the list of practice slots that the practice does not want"""
         return list(self.unwantedSlots)
     
-    def addPreferenceSlot(self, practiceSlot):
+    def addPreferenceSlot(self, practiceSlot, preferenceValue):
         """
         add a slot to the practices preference list
         
         Parameters
             practiceSlot (PracticeSlot): the practice slot that the practice has a preference for
+            preferenceValue (int): the preference value of the slot the practice wants
         """
-        self.preferenceSlots.append(practiceSlot)
+        self.preferenceSlots.append((practiceSlot, preferenceValue))
     
     def getPreferenceSlots(self):
         """Returns a copy of the list of practice slots that the practice has a preference for"""

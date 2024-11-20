@@ -72,7 +72,7 @@ try:
                     practice1.addIncompatibility(practice2)
                     practice2.addIncompatibility(practice1)
                 else:
-                    raise data.InvalidInputError(f"Header: (Not compatible) has an input with incorrect format of parameters (must be (game, game), (game, practice), (practice, practice)), line: {lineNum}")
+                    raise data.InvalidInputError(f"Header: (Preferences) has an input with a game/practice that does not exist, line: {lineNum}")
             elif currentHeader == "Unwanted":
                 words = [word.strip() for word in strippedLine.split(",")] # get the individual words out of the line
                 if (len(words) != 3): raise data.InvalidInputError(f"Header: (Unwanted) has an input with incorrect number of parameters, line: {lineNum}")
@@ -82,14 +82,36 @@ try:
                 if (data.Games.getGameByIdentifier(element) != None): # If its a game
                     game = data.Games.getGameByIdentifier(element)
                     slot = data.GameSlots.getGameSlotByDayAndTime(slotDay, slotTime)
-                    if (slot == None): raise data.InvalidInputError(f"Header: (Unwanted) has an input with a slot description that does not exist, line: {lineNum}")
+                    if (slot == None): raise data.InvalidInputError(f"Header: (Unwanted) has an input with a slot that does not exist, line: {lineNum}")
                     game.addUnwantedSlot(slot)
                 elif(data.Practices.getPracticeByIdentifier(element) != None): # If its a practice
-                    practice = data.Games.getGameByIdentifier(element)
-                    slot = data.GameSlots.getGameSlotByDayAndTime(slotDay, slotTime)
-                    if (slot == None): raise data.InvalidInputError(f"Header: (Unwanted) has an input with a slot description that does not exist, line: {lineNum}")
+                    practice = data.Practices.getPracticeByIdentifier(element)
+                    slot = data.PracticeSlots.getPracticeSlotByDayAndTime(slotDay, slotTime)
+                    if (slot == None): raise data.InvalidInputError(f"Header: (Unwanted) has an input with a slot that does not exist, line: {lineNum}")
                     practice.addUnwantedSlot(slot)
-
+                else:
+                    raise data.InvalidInputError(f"Header: (Unwanted) has an input with a game/practice that does not exist, line: {lineNum}")
+            elif currentHeader == "Preferences":
+                words = [word.strip() for word in strippedLine.split(",")] # get the individual words out of the line
+                if (len(words) != 4): raise data.InvalidInputError(f"Header: (Preferences) has an input with incorrect number of parameters, line: {lineNum}")
+                slotDay = words[0]
+                slotTime = words[1]
+                element = words[2]
+                preferenceValue = words[3]
+                if (data.Games.getGameByIdentifier(element) != None): # If its a game
+                    game = data.Games.getGameByIdentifier(element)
+                    slot = data.GameSlots.getGameSlotByDayAndTime(slotDay, slotTime)
+                    if (slot == None): raise data.InvalidInputError(f"Header: (Preferences) has an input with a slot that does not exist, line: {lineNum}")
+                    game.addPreferenceSlot(slot, preferenceValue)
+                elif(data.Practices.getPracticeByIdentifier(element) != None): # If its a practice
+                    practice = data.Practices.getPracticeByIdentifier(element)
+                    slot = data.PracticeSlots.getPracticeSlotByDayAndTime(slotDay, slotTime)
+                    # you can have invalid slots for some reason in preference input, just ignore and pass
+                    if (slot == None): print(f"WARNING, Header: (Preferences) has an input with a slot that does not exist, line: {lineNum}"); continue
+                    practice.addPreferenceSlot(slot, preferenceValue)
+                else:
+                    raise data.InvalidInputError(f"Header: (Preferences) has an input with a game/practice that does not exist, line: {lineNum}")
+            
 
 
 
@@ -130,3 +152,11 @@ for game in data.Games.getGames():
 for practice in data.Practices.getPractices():
     if isinstance(practice, data.Practice):
         print(practice.getIdentifier(), ":",practice.getUnwantedSlots())
+
+print("Preferences: ")
+for game in data.Games.getGames():
+    if isinstance(game, data.Game):
+        print(game.getIdentifier(), ":", game.getPreferenceSlots())
+for practice in data.Practices.getPractices():
+    if isinstance(practice, data.Practice):
+        print(practice.getIdentifier(), ":",practice.getPreferenceSlots())
