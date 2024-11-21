@@ -146,7 +146,7 @@ def parser(searchInput):
                     if (data.Games.getGameByIdentifier(element) != None): # If its a game
                         game = data.Games.getGameByIdentifier(element)
                         slot = data.GameSlots.getGameSlotByDayAndTime(slotDay, slotTime)
-                        if (slot == None): raise data.InvalidInputError(f"Header: (Preferences) has an input with a slot that does not exist, line: {lineNum}")
+                        if (slot == None): print(f"WARNING, Header: (Preferences) has an input with a slot that does not exist, line: {lineNum}"); continue
                         game.addPreferenceSlot(slot, preferenceValue)
                     elif(data.Practices.getPracticeByIdentifier(element) != None): # If its a practice
                         practice = data.Practices.getPracticeByIdentifier(element)
@@ -272,7 +272,7 @@ for practice in data.Practices.getPractices():
     if isinstance(practice, data.Practice):
         print(practice.getIdentifier(), ":",practice.getPairs())
 
-print("Unwanted: ")
+print("Partial Assignment: ")
 for game in data.Games.getGames():
     if isinstance(game, data.Game):
         print(game.getIdentifier(), ":", game.getPartialAssignmentSlot())
