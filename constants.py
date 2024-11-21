@@ -1,6 +1,10 @@
 from dataclasses import dataclass
 from parser import data
 
+"""
+    This file only contains necessary constants and data structures for problem representation
+"""
+
 MO = 'MO'
 TU = 'TU'
 FR = 'FR'
