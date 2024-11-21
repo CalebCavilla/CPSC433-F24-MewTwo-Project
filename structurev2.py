@@ -4,21 +4,6 @@
 # Fleaf will choose a leaf with breadth/depth or random selection
 # End result will be the same as V1 but with less computation on calculating leaf values
 
-incompatible = [] # List of incompatible games/practices
-unwanted = [] # List of unwanted games/practices
-preferences = [] # List of preferences for games/practices
-pairs = [] # List of games/practices that want to be scheduled together
-
-"""
-    Node class to store the schedule and remaining games/practices
-    Is equivalent to one pr from the ATree proposal
-"""
-class Node:
-    # Note: Could change depending on how the parser is implemented
-    def __init__(self, schedule, remaining):
-        self.schedule = schedule
-        self.remaining = remaining
-
 """
     Main code loop for AND tree search algorithm
     @param prob: Initial problem state
@@ -103,7 +88,7 @@ def fleaf(leafs):
     @return game or practice to schedule
 """
 def ftrans(pr):
-    remaining = pr.remaining 
+    remaining = pr.remaining
 
     # Choose a game or practice from preferences
     # If none, choose a game or practice from pairs
@@ -138,4 +123,19 @@ def SC(solutions):
 
 
     # Return the best solution
+    return 0
+
+"""
+    Creates the initial problem state after parsing the input
+    start() will also fulfill any partial assignments 
+    @return: Initial problem state
+"""
+def start():
+    # Parse the input
+    
+    # Initialize the problem state
+
+    # Fulfill partial assignment
+
+    # Return the initial problem state
     return 0
