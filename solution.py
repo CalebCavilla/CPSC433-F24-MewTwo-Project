@@ -49,6 +49,12 @@ class Problem:
     remGame: list[data.Game]
     remPrac: list[data.Practice]
 
+
+"""
+    Start state functionality from the project proposal
+    Start state creates the initial problem state and fulfills all partial assignments (if any) from the input
+    @return: Initial problem state 
+"""
 def start():
     # Parse the input
     parser(sys.argv)
@@ -56,14 +62,17 @@ def start():
     # Create the start state 
     pr = Problem(
         sched = Schedule(
+            # Initialize the schedule with empty slots
             mo = [Slot(([], 0, 0), ([], 0, 0)) for i in range(27)],
             tu = [Slot(([], 0, 0), ([], 0, 0)) for i in range(27)],
             fr = [Slot(([], 0, 0), ([], 0, 0)) for i in range(27)]
         ),
+        # Get the remaining games and practices
         remGame = data.Games.getGames(),
         remPrac = data.Practices.getPractices()
     )
 
+    # Where there are game slots, set game max and game min in pr to their corresponding values 
     for gameSlot in data.GameSlots.getGameSlots():
         if (gameSlot.getDay() == 'MO'):
             pr.sched.mo[time[gameSlot.getStartTime()]].game = ([], gameSlot.getGameMax(), gameSlot.getGameMin())
@@ -72,6 +81,7 @@ def start():
         elif (gameSlot.getDay() == 'FR'):
             pr.sched.fr[time[gameSlot.getStartTime()]].game = ([], gameSlot.getGameMax(), gameSlot.getGameMin())
 
+    # Where there are practice slots, set practice max and practice min in pr to their corresponding values 
     for pracSlot in data.PracticeSlots.getPracticeSlots():
         if (pracSlot.getDay() == 'MO'):
             pr.sched.mo[time[pracSlot.getStartTime()]].practice = ([], pracSlot.getPracticeMax(), pracSlot.getPracticeMin())
