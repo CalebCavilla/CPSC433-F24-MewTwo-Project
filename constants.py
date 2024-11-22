@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from parser import data
+from parserFile import data
 
 """
     This file only contains necessary constants and data structures for problem representation

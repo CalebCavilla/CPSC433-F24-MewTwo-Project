@@ -94,7 +94,7 @@ class Game:
         self.pairs = []
         self.partialAssignSlot = None
 
-        words = self.identifier.split()
+        words = str(self.identifier).split()
         self.organization = words[0]
         self.ageGroup = words[1]
         self.division = int(words[3])

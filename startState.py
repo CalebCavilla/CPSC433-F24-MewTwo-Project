@@ -1,4 +1,4 @@
-from parser import parser, data
+from parserFile import parser, data
 from dataclasses import dataclass
 from constants import *
 import sys
