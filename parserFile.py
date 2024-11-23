@@ -297,9 +297,16 @@ def parser(searchInput):
 parser(sys.argv)
 
 # Prints for testing
-print(f"Game Slots: {data.GameSlots.getGameSlots()}\n Practice Slots: {data.PracticeSlots.getPracticeSlots()}\n Games: {data.Games.getGames()}\n Practices: {data.Practices.getPractices()}")
+print(f"""
+------------------------------------------------------------      
+Game Slots: {data.GameSlots.getGameSlots()}
+Practice Slots: {data.PracticeSlots.getPracticeSlots()}
+Games: {data.Games.getGames()}
+Practices: {data.Practices.getPractices()}
+------------------------------------------------------------
+""")
 
-print("Not Compatible: ")
+print("\n------------------------------------------------------------\nNot Compatible: ")
 for game in data.Games.getGames():
     if isinstance(game, data.Game):
         print(game.getIdentifier(), ":", game.getIncompatibility())
@@ -307,7 +314,7 @@ for practice in data.Practices.getPractices():
     if isinstance(practice, data.Practice):
         print(practice.getIdentifier(), ":",practice.getIncompatibility())
 
-print("Unwanted: ")
+print("\n------------------------------------------------------------\nUnwanted: ")
 for game in data.Games.getGames():
     if isinstance(game, data.Game):
         print(game.getIdentifier(), ":", game.getUnwantedSlots())
@@ -315,7 +322,7 @@ for practice in data.Practices.getPractices():
     if isinstance(practice, data.Practice):
         print(practice.getIdentifier(), ":",practice.getUnwantedSlots())
 
-print("Preferences: ")
+print("\n------------------------------------------------------------\nPreferences: ")
 for game in data.Games.getGames():
     if isinstance(game, data.Game):
         print(game.getIdentifier(), ":", game.getPreferenceSlots())
@@ -323,7 +330,7 @@ for practice in data.Practices.getPractices():
     if isinstance(practice, data.Practice):
         print(practice.getIdentifier(), ":",practice.getPreferenceSlots())
 
-print("Pair: ")
+print("\n------------------------------------------------------------\nPair: ")
 for game in data.Games.getGames():
     if isinstance(game, data.Game):
         print(game.getIdentifier(), ":", game.getPairs())
@@ -331,7 +338,7 @@ for practice in data.Practices.getPractices():
     if isinstance(practice, data.Practice):
         print(practice.getIdentifier(), ":",practice.getPairs())
 
-print("Partial Assignment: ")
+print("\n------------------------------------------------------------\nPartial Assignment: ")
 for game in data.Games.getGames():
     if isinstance(game, data.Game):
         print(game.getIdentifier(), ":", game.getPartialAssignmentSlot())
@@ -339,12 +346,12 @@ for practice in data.Practices.getPractices():
     if isinstance(practice, data.Practice):
         print(practice.getIdentifier(), ":",practice.getPartialAssignmentSlot())
 
-# print("Weights and Penalties:")
-# print(data.WeightsAndPenalties.getMinFilledWeight())
-# print(data.WeightsAndPenalties.getPrefWeight())
-# print(data.WeightsAndPenalties.getPairWeight())
-# print(data.WeightsAndPenalties.getSecDiffWeight())
-# print(data.WeightsAndPenalties.getGameMinPen())
-# print(data.WeightsAndPenalties.getPracticeMinPen())
-# print(data.WeightsAndPenalties.getNotPairedPen())
-# print(data.WeightsAndPenalties.getSectionPen())
+print("Weights and Penalties:")
+print(data.WeightsAndPenalties.getMinFilledWeight())
+print(data.WeightsAndPenalties.getPrefWeight())
+print(data.WeightsAndPenalties.getPairWeight())
+print(data.WeightsAndPenalties.getSecDiffWeight())
+print(data.WeightsAndPenalties.getGameMinPen())
+print(data.WeightsAndPenalties.getPracticeMinPen())
+print(data.WeightsAndPenalties.getNotPairedPen())
+print(data.WeightsAndPenalties.getSectionPen())
