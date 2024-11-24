@@ -1,6 +1,13 @@
+"""
+Authors: Ray Sandhu (00000000), Aoi Ueki (00000000), Enzo Mutiso (30182555)
+CPSC433
+References:
+"""
+
 from parserFile import parser, data
 from dataclasses import dataclass
 from constants import *
+import softConstraints as sc
 import sys
 
 """
@@ -60,5 +67,17 @@ def start():
 def HC(sched, slotToCheck, match):
     # Check if slot is valid based on hard constraints
     return True
+
+"""
+    Calculate soft constraints for the current schedule
+    @author: Enzo Mutiso
+    @param sched: Complete schedule to check against
+    @return: Soft constraint value (lower is better)
+"""
+def SC(sched, pen_gamemin, pen_practicemin, pen_notpaired, pen_section):
+    # Calculate soft constraints for the current schedule
+    return (sc.gpmin(sched, pen_gamemin, pen_practicemin)
+            + sc.pref(sched) + sc.pair(sched, pen_notpaired)
+            + sc.divisionPair(sched, pen_section))
 
 start()
