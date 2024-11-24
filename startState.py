@@ -15,6 +15,8 @@ def start():
     # Create the start state 
     pr = Problem(
         sched = Schedule(
+            ## !!! RAY-Q why do we need a full schedule with invalid slots, we already have a list of the possible slots
+            # !! RAY-Q don't see the point of coupling gameslots and practiceslots in the Slot class
             # Initialize the schedule with empty slots
             mo = [Slot() for i in range(27)],
             tu = [Slot() for i in range(27)],
@@ -25,6 +27,7 @@ def start():
         remPracs = data.Practices.getPractices()
     )
 
+    # !! RAY-Q this becomes unnecessary because only slots with gameMin/Maxes would be in sched
     # Where there are game slots, set game max and game min in pr to their corresponding values 
     for slot in data.GameSlots.getGameSlots():
         if (slot.getDay() == MO):
@@ -44,7 +47,7 @@ def start():
             pr.sched.fr[TIME[slot.getStartTime()]].prac = ([], slot.getPracticeMax(), slot.getPracticeMin())
     
     # Fulfill partial assignments for games
-    for game in data.Games.getGames():        
+    for game in data.Games.getGames():
         # Check if there is a partial assignment for the game
         slot = game.getPartialAssignmentSlot()
         if (slot != None): 
@@ -69,7 +72,7 @@ def start():
                 pr.remGames.remove(game)
             # If the slot is invalid, print an error and exit
             else: 
-                print("Invalid slot for partial assignment")
+                print("Invalid slot for partial assignment; no valid assignment possible with HC")
                 exit(1)
 
     # Fulfill partial assignments for practices   
@@ -97,9 +100,9 @@ def start():
                 # Update the remaining practices
                 pr.remPracs.remove(prac)
             else:
-                print("Invalid slot for partial assignment")
+                print("Invalid slot for partial assignment; no valid assignment possible with HC")
                 exit(1)
-            
+    print(pr)
     return pr
 
 """

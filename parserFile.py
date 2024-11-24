@@ -280,7 +280,8 @@ def parser(searchInput):
 
     # Parse all of the weights and penalties from the command line
     try:
-        if not all(item.isdigit() for item in commandLineInputs[1:]): raise data.InvalidInputError(f"Command line contains parameters that are not integers")
+        if not all(item.isdigit() for item in commandLineInputs[1:]): 
+            raise data.InvalidInputError(f"Command line contains parameters that are not integers")
         data.WeightsAndPenalties.setMinFilledWeight(commandLineInputs[1])
         data.WeightsAndPenalties.setPrefWeight(commandLineInputs[2])
         data.WeightsAndPenalties.setPairWeight(commandLineInputs[3])

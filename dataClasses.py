@@ -442,7 +442,7 @@ class Games:
         Games.games = [g for g in Games.games if g != game]
 
     @staticmethod
-    def getGames():
+    def getGames() -> list[Game]:
         """Returns a copy of the list of games that needs to be scheduled"""
         return list(Games.games)
     
