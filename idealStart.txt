@@ -1,0 +1,32 @@
+Problem(
+    sched=Schedule(
+        gameSlots: {
+            "mo-8:00": ["CUSA O18 DIV 01"],
+            "mo-9:00": [],
+            "tu-9:30": []
+        },
+        practiceSlots: {
+            "mo-8:00": [],
+            "tu-10:00": [],
+            "fr-10:00": ["CUSA O18 DIV 01 PRC 01"]
+        }
+    ),
+    remGames=[
+        'CMSA U13T3 DIV 01',
+        'CMSA U13T3 DIV 02',
+        'CMSA U17T1 DIV 01',
+        'CMSA U13T3 DIV 01',
+        'CMSA U13T3 DIV 02',
+        'CUSA O18 DIV 01',
+        'CMSA U17T1 DIV 01',
+    ],
+    remPracs=[
+        'CMSA U13T3 DIV 01 PRC 01',
+        'CMSA U13T3 DIV 02 OPN 02',
+        'CMSA U17T1 PRC 01',
+        'CMSA U13T3 DIV 01 PRC 01',
+        'CMSA U13T3 DIV 02 OPN 02',
+        'CUSA O18 DIV 01 PRC 01',
+        'CMSA U17T1 PRC 01',
+    ],
+)
