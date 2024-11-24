@@ -6,23 +6,28 @@ class GameSlot:
     Class to represent a game slot in the schedule
 
     Attributes:
+        id (str): easy id string in format day-starttime (mo-8:00, tu-14:30)
         day (str): Identifier for the day of the week the slot is in ("MO", "TU", "FR")
         startTime (str): Time of the day that the game slot is in (Ex. "8:00", "14:30")
         gameMax (int): maximum number of games that can be scheduled into this slot
         gameMin (int): minimum number of games that can be scheduled into this slot
     """
     def __init__(self, day, startTime, gameMax, gameMin):
+        self.id = self.genId(day, startTime)
         self.day = day
         self.startTime = startTime
         self.gameMax = gameMax
         self.gameMin = gameMin
 
     def __str__(self):
-        return f"[{self.day}, {self.startTime}, {self.gameMax}, {self.gameMin}]"
+        return f"[{self.id}, {self.day}, {self.startTime}, {self.gameMax}, {self.gameMin}]"
     
     def __repr__(self):
-        return f"[{repr(self.day)}, {repr(self.startTime)}, {repr(self.gameMax)}, {repr(self.gameMin)}]"
+        return f"[{repr(self.id)}, {repr(self.day)}, {repr(self.startTime)}, {repr(self.gameMax)}, {repr(self.gameMin)}]"
 
+    def genId(self, day, startTime):
+        return str(day).lower() + "-" + str(startTime)
+    
     def getDay(self):
         """Returns the day of the week as a string"""
         return self.day
@@ -39,29 +44,34 @@ class GameSlot:
         """Returns the minimum number of games for the time slot as an int"""
         return self.gameMin
 
-
 class PracticeSlot:
     """
     Class to represent a practice slot in the schedule
 
     Attributes:
+        id (str): easy id string in format day-starttime (mo-8:00, tu-14:30)
         day (str): Identifier for the day of the week the slot is in ("MO", "TU", "FR")
         startTime (str): Time of the day that the practice slot is in (Ex. "8:00", "14:30")
         practiceMax (int): maximum number of practice that can be scheduled into this slot
         practiceMin (int): minimum number of practice that can be scheduled into this slot
     """
     def __init__(self, day, startTime, practiceMax, practiceMin):
+        self.id = self.genId(day, startTime)
         self.day = day
         self.startTime = startTime
         self.practiceMax = practiceMax
         self.practiceMin = practiceMin
 
     def __str__(self):
-        return f"[{self.day}, {self.startTime}, {self.practiceMax}, {self.practiceMin}]"
+        return f"[{self.id}, {self.day}, {self.startTime}, {self.practiceMax}, {self.practiceMin}]"
     
     def __repr__(self):
-        return f"[{repr(self.day)}, {repr(self.startTime)}, {repr(self.practiceMax)}, {repr(self.practiceMin)}]"
-
+        return f"[{repr(self.id)}, {repr(self.day)}, {repr(self.startTime)}, {repr(self.practiceMax)}, {repr(self.practiceMin)}]"
+    
+    def getId(self):
+        """Returns the unique id in format day-startTime"""
+        return self.id
+    
     def getDay(self):
         """Returns the day of the week as a string"""
         return self.day
@@ -78,7 +88,9 @@ class PracticeSlot:
         """Returns the minimum number of practices for the time slot as an int"""
         return self.practiceMin
     
-
+    def genId(self, day, startTime):
+        return str(day).lower() + "-" + str(startTime)
+    
 class Game:
     """
     Class to represent a game that needs to be scheduled
@@ -94,7 +106,7 @@ class Game:
         self.pairs = []
         self.partialAssignSlot = None
 
-        words = self.identifier.split()
+        words = str(self.identifier).split()
         self.organization = words[0]
         self.ageGroup = words[1]
         self.division = int(words[3])
@@ -191,8 +203,6 @@ class Game:
     def getDivision(self):
         """Returns the division of the practice"""
         return self.division
-    
-    
 
 class Practice:
     """
@@ -323,35 +333,34 @@ class Practice:
         """Returns the practiceNum of the practice"""
         return self.practiceNum
 
-
 class GameSlots:
     """
     Static Class to represent the list of all game slots available in the schedule
     """
-    gameSlots = []
+    gameSlotsDict = {}
 
     @staticmethod
-    def addGameSlot(gameSlot):
+    def addGameSlot(gameSlot: 'GameSlot'):
         """Adds a game slot to the current list of game slots
         
         Parameters:
             gameSlot (GameSlot): The game slot object to be added to the list of game slots
         """
-        GameSlots.gameSlots.append(gameSlot)
+        GameSlots.gameSlotsDict[gameSlot.id] = gameSlot
 
     @staticmethod
     def removeGameSlot(gameSlot):
         """Remove a game slot from the current list of game slots
         
         Parameters:
-            gameSlot (GameSlot): The game slot object to be removed from the list of game slots
+            gameSlot (Game Slot): The game slot object to be removed from the list of game slots
         """
-        GameSlots.gameSlots = [gs for gs in GameSlots.gameSlots if gs != gameSlot]
+        del GameSlots.gameSlotsDict[gameSlot.id]
 
     @staticmethod
     def getGameSlots():
         """Returns a copy of the list of game slots available in the schedule"""
-        return list(GameSlots.gameSlots)
+        return GameSlots.gameSlotsDict.values()
     
     @staticmethod
     def getGameSlotByDayAndTime(day, startTime):
@@ -361,26 +370,22 @@ class GameSlots:
             day (str): The day of the game slot you want to retrieve
             startTime (str): The start time of the game slot you want to retrieve
         """
-        for gameSlot in GameSlots.gameSlots:
-            if isinstance(gameSlot, GameSlot):
-                if (gameSlot.getDay() == day and gameSlot.getStartTime() == startTime):
-                    return gameSlot
-        return None
+        return GameSlots.gameSlotsDict.get(day.lower() + "-" + startTime)
 
 class PracticeSlots:
     """
     Static Class to represent the list of all practice slots available in the schedule
     """
-    practiceSlots = []
+    practiceSlotsDict = {}
 
     @staticmethod
-    def addPracticeSlot(practiceSlot):
+    def addPracticeSlot(practiceSlot: 'PracticeSlot'):
         """Adds a practice slot to the current list of practice slots
         
         Parameters:
             practiceSlot (PracticeSlot): The practice slot object to be added to the list of practice slots
         """
-        PracticeSlots.practiceSlots.append(practiceSlot)
+        PracticeSlots.practiceSlotsDict[practiceSlot.id] = practiceSlot
 
     @staticmethod
     def removePracticeSlot(practiceSlot):
@@ -389,12 +394,12 @@ class PracticeSlots:
         Parameters:
             practiceSlot (Practice Slot): The practice slot object to be removed from the list of practice slots
         """
-        PracticeSlots.practiceSlots = [ps for ps in PracticeSlots.practiceSlots if ps != practiceSlot]
+        del PracticeSlots.practiceSlotsDict[practiceSlot.id]
 
     @staticmethod
     def getPracticeSlots():
         """Returns a copy of the list of practice slots available in the schedule"""
-        return list(PracticeSlots.practiceSlots)
+        return PracticeSlots.practiceSlotsDict.values()
     
     @staticmethod
     def getPracticeSlotByDayAndTime(day, startTime):
@@ -404,12 +409,7 @@ class PracticeSlots:
             day (str): The day of the practice slot you want to retrieve
             startTime (str): The start time of the practice slot you want to retrieve
         """
-        for practiceSlot in PracticeSlots.practiceSlots:
-            if isinstance(practiceSlot, PracticeSlot):
-                if (practiceSlot.getDay() == day and practiceSlot.getStartTime() == startTime):
-                    return practiceSlot
-        return None
-
+        return PracticeSlots.practiceSlotsDict.get(day.lower() + "-" + startTime)
 
 class Games:
     """
@@ -436,7 +436,7 @@ class Games:
         Games.games = [g for g in Games.games if g != game]
 
     @staticmethod
-    def getGames():
+    def getGames() -> list[Game]:
         """Returns a copy of the list of games that needs to be scheduled"""
         return list(Games.games)
     
@@ -448,11 +448,9 @@ class Games:
             identifier (str): The identifier of the game you want to retrieve from the list of current games
         """
         for game in Games.games:
-            if isinstance(game, Game):
-                if game.getIdentifier() == identifier:
-                    return game
+            if game.getIdentifier() == identifier:
+                return game
         return None
-
     
 class Practices:
     """
@@ -491,9 +489,8 @@ class Practices:
             identifier (str): The identifier of the practice you want to retrieve from the list of current practices
         """
         for practice in Practices.practices:
-            if isinstance(practice, Practice):
-                if practice.getIdentifier() == identifier:
-                    return practice
+            if practice.getIdentifier() == identifier:
+                return practice
         return None
     
 class WeightsAndPenalties:
@@ -588,8 +585,6 @@ class WeightsAndPenalties:
     def setSectionPen(sectionPen):
         """sets the value of the section penalty"""
         WeightsAndPenalties.sectionPen = sectionPen
-
-
 
 class InvalidInputError(Exception):
     def __init__(self, message):
