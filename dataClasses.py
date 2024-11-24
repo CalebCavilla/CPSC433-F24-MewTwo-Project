@@ -44,7 +44,6 @@ class GameSlot:
         """Returns the minimum number of games for the time slot as an int"""
         return self.gameMin
 
-
 class PracticeSlot:
     """
     Class to represent a practice slot in the schedule
@@ -92,7 +91,6 @@ class PracticeSlot:
     def genId(self, day, startTime):
         return str(day).lower() + "-" + str(startTime)
     
-
 class Game:
     """
     Class to represent a game that needs to be scheduled
@@ -205,8 +203,6 @@ class Game:
     def getDivision(self):
         """Returns the division of the practice"""
         return self.division
-    
-    
 
 class Practice:
     """
@@ -376,7 +372,6 @@ class GameSlots:
         """
         return GameSlots.gameSlotsDict.get(day.lower() + "-" + startTime)
 
-
 class PracticeSlots:
     """
     Static Class to represent the list of all practice slots available in the schedule
@@ -415,7 +410,6 @@ class PracticeSlots:
             startTime (str): The start time of the practice slot you want to retrieve
         """
         return PracticeSlots.practiceSlotsDict.get(day.lower() + "-" + startTime)
-
 
 class Games:
     """
@@ -458,7 +452,6 @@ class Games:
                 if game.getIdentifier() == identifier:
                     return game
         return None
-
     
 class Practices:
     """
@@ -594,8 +587,6 @@ class WeightsAndPenalties:
     def setSectionPen(sectionPen):
         """sets the value of the section penalty"""
         WeightsAndPenalties.sectionPen = sectionPen
-
-
 
 class InvalidInputError(Exception):
     def __init__(self, message):
