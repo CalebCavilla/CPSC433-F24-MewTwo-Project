@@ -448,9 +448,8 @@ class Games:
             identifier (str): The identifier of the game you want to retrieve from the list of current games
         """
         for game in Games.games:
-            if isinstance(game, Game):
-                if game.getIdentifier() == identifier:
-                    return game
+            if game.getIdentifier() == identifier:
+                return game
         return None
     
 class Practices:
@@ -490,9 +489,8 @@ class Practices:
             identifier (str): The identifier of the practice you want to retrieve from the list of current practices
         """
         for practice in Practices.practices:
-            if isinstance(practice, Practice):
-                if practice.getIdentifier() == identifier:
-                    return practice
+            if practice.getIdentifier() == identifier:
+                return practice
         return None
     
 class WeightsAndPenalties:
