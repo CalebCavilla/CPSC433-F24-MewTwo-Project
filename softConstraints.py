@@ -32,6 +32,7 @@ def pref(sched):
     @return: Total penalty for mismatched pairs
 """
 def pair(sched, pen_notpaired):
+    # TODO: implement this
     return 0
 
 """
@@ -42,4 +43,5 @@ def pair(sched, pen_notpaired):
     @return: Total penalty for division pairs
 """
 def divisionPair(sched, pen_section):
+    # TODO: implement this
     return 0
